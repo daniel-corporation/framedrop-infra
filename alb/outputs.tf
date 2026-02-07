@@ -15,5 +15,5 @@ output "alb_zone_id" {
 
 output "target_group_arn" {
   description = "ARN of the Target Group"
-  value       = aws_lb_target_group.alb_order_target_group.arn
+  value       = aws_lb_target_group.alb_framedrop_target_group.arn
 }

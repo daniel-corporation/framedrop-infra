@@ -10,3 +10,21 @@ module "ecs_cluster" {
     Project     = "framedrop"
   }
 }
+
+module "alb" {
+  source = "./alb"
+
+  tags = {
+    Environment = "dev"
+    Project     = "BaitersBurger"
+  }
+}
+
+module ecr {
+  source = "./ecr"
+
+  tags = {
+    Environment = "dev"
+    Project     = "framedrop"
+  }
+}
