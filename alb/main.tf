@@ -44,7 +44,7 @@ resource "aws_lb_target_group" "alb_framedrop_target_group" {
 
   health_check {
     path                = "/actuator/health"
-    interval            = 30
+    interval            = 120
     timeout             = 5
     healthy_threshold   = 2
     unhealthy_threshold = 2
