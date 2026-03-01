@@ -41,3 +41,21 @@ module "s3" {
   source = "./s3"
 
 }
+
+# Buscar tabela DynamoDB existente
+data "aws_dynamodb_table" "video" {
+  name = "Video"
+}
+
+module "lambda" {
+  source = "./lambda-trigger-dynamodb"
+  
+  function_name        = "video-statusprocess-trigger"
+  dynamodb_stream_arn  = data.aws_dynamodb_table.video.stream_arn
+  sender_email         = "danbboy2@yahoo.com.br"  # Use um e-mail já verificado no SES
+  
+  tags = {
+    Environment = "prod"
+    Project     = "framedrop"
+  }
+}
