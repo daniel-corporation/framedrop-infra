@@ -19,6 +19,14 @@ resource "aws_security_group" "alb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "Video Processing API from internet"
+    from_port   = 8081
+    to_port     = 8081
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     description = "Allow all outbound traffic"
     from_port   = 0
@@ -76,5 +84,39 @@ resource "aws_lb_listener" "alb_listener" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.alb_framedrop_target_group.arn
+  }
+}
+
+resource "aws_lb_target_group" "framedrop_video_processing_target_group" {
+  name        = "framedrop-video-processing-tg"
+  port        = 8081
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = data.aws_vpc.aws_vpc_default.id
+
+  health_check {
+    path                = "/actuator/health"
+    interval            = 120
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    matcher             = "200-399"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tags = var.tags
+}
+
+resource "aws_lb_listener" "alb_video_processing_listener" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "8081"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.framedrop_video_processing_target_group.arn
   }
 }

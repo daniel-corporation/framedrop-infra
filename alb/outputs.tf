@@ -17,3 +17,8 @@ output "target_group_arn" {
   description = "ARN of the Target Group"
   value       = aws_lb_target_group.alb_framedrop_target_group.arn
 }
+
+output "video_processing_target_group_arn" {
+  description = "ARN of the Video Processing Target Group"
+  value       = aws_lb_target_group.framedrop_video_processing_target_group.arn
+}
