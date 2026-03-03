@@ -49,13 +49,17 @@ data "aws_dynamodb_table" "video" {
 
 module "lambda" {
   source = "./lambda-trigger-dynamodb"
-  
-  function_name        = "video-statusprocess-trigger"
-  dynamodb_stream_arn  = data.aws_dynamodb_table.video.stream_arn
-  sender_email         = "danbboy2@yahoo.com.br"  # Use um e-mail já verificado no SES
-  
+
+  function_name       = "video-statusprocess-trigger"
+  dynamodb_stream_arn = data.aws_dynamodb_table.video.stream_arn
+  sender_email        = var.sender_email
+  smtp_port           = var.smtp_port
+  smtp_app_token      = var.smtp_app_token
+
   tags = {
     Environment = "prod"
     Project     = "framedrop"
   }
+
+  
 }

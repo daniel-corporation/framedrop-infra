@@ -32,6 +32,14 @@ jobs:
 
       - name: Plan infrastructure changes
         run: terraform plan
+        env:
+          TF_VAR_sender_email: ${{ secrets.SENDER_EMAIL }}
+          TF_VAR_smtp_port: ${{ secrets.SMTP_PORT }}
+          TF_VAR_smtp_app_token: ${{ secrets.SMTP_APP_TOKEN }}
 
       - name: Apply infrastructure changes
         run: terraform apply -auto-approve
+        env:
+          TF_VAR_sender_email: ${{ secrets.SENDER_EMAIL }}
+          TF_VAR_smtp_port: ${{ secrets.SMTP_PORT }}
+          TF_VAR_smtp_app_token: ${{ secrets.SMTP_APP_TOKEN }}

@@ -22,7 +22,10 @@ resource "aws_lambda_function" "statusprocess_trigger" {
 
   environment {
     variables = {
-      SENDER_EMAIL = var.sender_email
+      SENDER_EMAIL  = var.sender_email
+      SMTP_HOST      = var.smtp_host
+      SMTP_PORT      = tostring(var.smtp_port)
+      SMTP_APP_TOKEN = var.smtp_app_token
     }
   }
 
