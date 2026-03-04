@@ -34,7 +34,7 @@ module parameter_store {
 
   bucket_name = "framedrop-upload"
   sqs_video_processing_queue_url = "https://sqs.us-east-1.amazonaws.com/356821122440/framedrop-processing-queue"
-  upload_api_base_url = "http://framedrop-alb-1620686225.us-east-1.elb.amazonaws.com"
+  upload_api_base_url = "http://framedrop-alb-1620686225.us-east-1.elb.amazonaws.com:8081"
 }
 
 module "s3" {
