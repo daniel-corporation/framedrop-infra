@@ -69,7 +69,7 @@ def lambda_handler(event, context):
 O status do seu processo foi atualizado:
 
 Video ID: {video_id}
-Status Anterior: {old_status if old_status else 'Novo'}
+Status Anterior: {old_status if old_status else 'NEW'}
 Status Atual: {new_status}
 {download_section}
 Este é um e-mail automático de notificação.
