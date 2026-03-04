@@ -96,10 +96,12 @@ resource "aws_lb_target_group" "framedrop_video_processing_target_group" {
 
   health_check {
     path                = "/actuator/health"
-    interval            = 120
-    timeout             = 5
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    interval            = 30
+    timeout             = 10
     healthy_threshold   = 2
-    unhealthy_threshold = 2
+    unhealthy_threshold = 5
     matcher             = "200-399"
   }
 
