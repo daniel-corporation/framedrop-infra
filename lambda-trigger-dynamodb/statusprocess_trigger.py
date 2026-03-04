@@ -52,10 +52,16 @@ def lambda_handler(event, context):
                 # Obter email do usuário
                 user_email = new_image.get('email', {}).get('S')
                 video_id = new_image.get('videoId', {}).get('S')
+                url_pre_signed = new_image.get('urlPreSigned', {}).get('S')
 
                 if not user_email:
                     print(f"Email não encontrado para o registro: {video_id}")
                     continue
+
+                # Preparar bloco de download se houver URL
+                download_section = ""
+                if url_pre_signed:
+                    download_section = f"\nFaça o download dos frames:\n{url_pre_signed}\n"
 
                 # Preparar mensagem
                 email_body = f"""Olá!
@@ -65,7 +71,7 @@ O status do seu processo foi atualizado:
 Video ID: {video_id}
 Status Anterior: {old_status if old_status else 'Novo'}
 Status Atual: {new_status}
-
+{download_section}
 Este é um e-mail automático de notificação.
 
 Atenciosamente,
